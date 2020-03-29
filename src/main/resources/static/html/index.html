@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+        google
+            .charts
+            .load('current', { packages: ['corechart'] });
+    </script>
+    <script type="text/javascript" src="../js/demoapp.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .errorDisplay1 {
+            display: none;
+            position: fixed;
+            top: 40%;
+            left: 45%;
+            background: orange;
+            padding: 5px;
+            border: 1px solid black;
+        }
+
+        .showError1:hover .errorDisplay1 {
+            display: block;
+        }
+
+        .filterRow {
+            display: none;
+            /* Hidden by default */
+        }
+
+        .row {
+            width: 100%;
+        }
+
+        .detailCollapsible {
+            background-color: #15d64f;
+            color: black;
+            cursor: pointer;
+            padding: 10px;
+            min-width: 99.5%;
+            max-width: 99.5%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 13px;
+            border-bottom: 1px solid #252A33;
+            word-break: break-all;
+        }
+
+        .navCollapsible {
+            background-color: #15d64f;
+            color: black;
+            cursor: pointer;
+            padding-left: 2px;
+            min-width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 14px;
+            border-bottom: 1px solid #383F49;
+            left: 10px;
+            display: block;
+            word-break: break-all;
+        }
+
+        .detailActive,
+        .detailCollapsible:hover {
+            background-color: #555;
+        }
+
+        .detailContent {
+            width: 99%;
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            font-size: 12px;
+            border: 1px solid #252A33;
+            border-top: 0;
+            border-right: 0;
+            word-break: break-all;
+            -webkit-animation-name: detailAnimation;
+            /* Safari 4.0 - 8.0 */
+            -webkit-animation-duration: 50ms;
+            /* Safari 4.0 - 8.0 */
+            animation-name: detailAnimation;
+            animation-duration: 50ms;
+        }
+
+        .navContent {
+            margin-left: 0.5% solid #383F49;
+            display: none;
+            width: 100%;
+            text-align: left;
+            overflow: hidden;
+            font-size: 12px;
+            border-bottom: 1px solid #383F49;
+            border-left-width: 5px;
+            border-top: 0;
+            border-left-color: #383F49;
+            word-break: break-all;
+            border-right: 0;
+
+        }
+
+        .active {
+            border-left: 5px solid #00adef;
+        }
+
+        :focus {
+            outline: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        body,
+        html {
+            min-width: 100%;
+            max-width: 100%;
+            min-height: 100%;
+            max-height: 100%;
+            line-height: 1.3;
+        }
+
+        .container {
+            min-width: 100%;
+            max-width: 100%;
+            min-height: 100%;
+            max-height: 100%;
+        }
+
+        .leftpanel {
+            margin: 0;
+            padding: 0;
+            min-width: 20%;
+            max-width: 20%;
+            min-height: 81.4%;
+            max-height: 81.4%;
+            float: left;
+            background-color: #383F49;
+            overflow-y: auto;
+            left: 0;
+            position: fixed;
+        }
+
+        .rightpanel {
+            margin: 0;
+            padding: 0;
+            min-height: 85%;
+            max-height: 85%;
+            min-width: 80%;
+            max-width: 80%;
+            position: fixed;
+            float: left;
+            background-color: #252A33;
+            right: 0;
+
+        }
+
+        .toppanel {
+            padding: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-height: 15%;
+            min-height: 150px;
+            background-color: rgb(27, 27, 27);
+        }
+
+        .detailScript {
+            position: absolute;
+            display: none;
+            min-width: 98%;
+            max-height: 90%;
+            min-height: 90%;
+            overflow: auto;
+        }
+
+        .execTableRow {
+            float: left;
+            min-width: 100%;
+            min-height: 20px;
+            color: grey;
+            padding: 2px;
+            text-align: left;
+
+        }
+
+        .navCollapsible::after {
+            content: "";
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            float: right;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .down.navCollapsible::after {
+            border: solid blue;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+
+        .sk-cube-grid {
+            width: 40px;
+            height: 40px;
+            margin: 40px auto;
+            /*
+   * Spinner positions
+   * 1 2 3
+   * 4 5 6
+   * 7 8 9
+   */
+        }
+
+        .sk-cube-grid .sk-cube {
+            width: 33.33%;
+            height: 33.33%;
+            background-color: #060057;
+            float: left;
+            -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+        }
+
+        .sk-cube-grid .sk-cube1 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        .sk-cube-grid .sk-cube2 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
+
+        .sk-cube-grid .sk-cube3 {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        .sk-cube-grid .sk-cube4 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+
+        .sk-cube-grid .sk-cube5 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        .sk-cube-grid .sk-cube6 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
+
+        .sk-cube-grid .sk-cube7 {
+            -webkit-animation-delay: 0.0s;
+            animation-delay: 0.0s;
+        }
+
+        .sk-cube-grid .sk-cube8 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+
+        .sk-cube-grid .sk-cube9 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
+
+        @-webkit-keyframes sk-cubeGridScaleDelay {
+
+            0%,
+            100%,
+            70% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            }
+
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+            }
+        }
+
+        @keyframes sk-cubeGridScaleDelay {
+
+            0%,
+            100%,
+            70% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            }
+
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-button {
+            background: #ccc;
+        }
+
+        ::-webkit-scrollbar-track-piece {
+            background: #888;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: steelblue;
+        }
+
+        @keyframes detailAnimation {
+            0% {
+                width: 0;
+                height: 0;
+                transform: scale(0);
+            }
+
+            25% {
+                width: 25%;
+                height: 25%;
+                transform: scale(0.25);
+            }
+
+            50% {
+                width: 50%;
+                height: 50%;
+                transform: scale(0.50);
+            }
+
+            75% {
+                width: 75%;
+                height: 75%;
+                transform: scale(0.75);
+            }
+
+            100% {
+                width: 100%;
+                height: 100%;
+                transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes detailAnimation {
+            0% {
+                width: 0;
+                height: 0;
+                transform: scale(0);
+            }
+
+            25% {
+                width: 25%;
+                height: 25%;
+                transform: scale(0.25);
+            }
+
+            50% {
+                width: 50%;
+                height: 50%;
+                transform: scale(0.50);
+            }
+
+            75% {
+                width: 75%;
+                height: 75%;
+                transform: scale(0.75);
+            }
+
+            100% {
+                width: 100%;
+                height: 100%;
+                transform: scale(1);
+            }
+        }
+
+        table {
+            min-width: 100%;
+            border: 1px solid gray;
+        }
+
+        td,
+        th {
+            border: 1px solid gray;
+            color: gray;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        ​
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <div id="mainPage" class="container">
+        <div id="topPanel" class="toppanel">
+            
+        </div>
+        <div id="navPanel" class="leftpanel">
+            <div class="naveMenu">
+                <button class="navCollapsible" style=" background-color:#15d64f;">Employee</button>
+                <div style="background-color: #383F49;">
+                    <button id="Navigationtc1ui0" class="navContent"
+                        style="left:10px;display: none;  background-color:#c60519;">
+                        Employee Registration
+                    </button>
+                    <button id="Navigationtc2ui1" class="navContent"
+                        style="left:10px;display: none;  background-color:#15d64f;">
+                        View Employees
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="DetailTable" class="rightpanel">
+            <div id="detail_Navigationtc1ui0" class= "detailScript">
+                
+                <label style="color:grey;"for="fname">First Name</label><br>
+                <input type="textbox" id="fname">
+                <br>
+                <label style="color:grey;" for="sname">Last Name</label>
+                <br>
+                <input id ="sname" type="textarea">
+                <br>
+                <label style="color:grey;" for="group1">Sex</label>
+                <fieldset id="group1">
+                    <input type="radio" id="male" name="group1" value="Male">
+                    <label for="male">Male</label><br>
+                    <input type="radio" id="female" name="group1" value="female">
+                    <label for="female">Female</label><br>
+                    <input type="radio" id="other" name="group1" value="other">
+                    <label for="other">Other</label>
+                </fieldset>
+                <br>
+                <label style="color:grey;" for="DOB">DOB</label>
+                <input type="date" name="DOB" id="DOB">
+                <br>
+                <label style="color:grey;" for="email">EMail</label>
+                <input type="email" name="email" id="email">
+                <br>
+                <label style="color:grey;" for="file">File</label>
+                <input style = "color:grey;" type="file" name="file" id="file">
+                <br>
+                <label style="color:grey;" for="cars">Cars</label>
+                <select id="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <br>
+                <label style="color:grey;" for="consent">Consent</label>
+                <input id="consent" type="checkbox">
+                <input type="button" value="Save"  onclick="saveMethod()">
+                
+                <button type="button"  onclick="postEmployee()">SignUp</button>
+               
+            </div>
+<div id="detail_Navigationtc2ui1" class= "detailScript">
+ <div>
+                <table id = "empTable">
+                <thead>
+                
+                <th>First Name</th>
+				<th>Sex</th>
+				<th>DOB</th>
+				<th>Email</th>
+				<th>Cars</th>
+                </thead>
+                <tbody>
+                
+                </tbody>
+                </table>
+                </div>
+</div>
+            <div id="contentLoading" float="right" style="width:78%;display:none;top:40%;left:10%;position: absolute;">
+                <div class="sk-cube-grid">
+                    <div class="sk-cube sk-cube1"></div>
+                    <div class="sk-cube sk-cube2"></div>
+                    <div class="sk-cube sk-cube3"></div>
+                    <div class="sk-cube sk-cube4"></div>
+                    <div class="sk-cube sk-cube5"></div>
+                    <div class="sk-cube sk-cube6"></div>
+                    <div class="sk-cube sk-cube7"></div>
+                    <div class="sk-cube sk-cube8"></div>
+                    <div class="sk-cube sk-cube9"></div>
+                </div>
+            </div>
+       </div>
+    </div>
+    
+
+</body>
+
+</html>
